@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cool_Craft Lobby</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  h1 {
+    margin-bottom: 30px;
+  }
+  button {
+    background-color: #1e90ff;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #1c86ee;
+  }
+  #message {
+    margin-top: 20px;
+    color: #ccc;
+    min-height: 24px;
+  }
+  #gameGrid {
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    grid-gap: 5px;
+    justify-content: center;
+  }
+  .block {
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    cursor: pointer;
+    user-select: none;
+  }
+  .block.active {
+    background-color: #32cd32;
+  }
+</style>
+</head>
+<body>
+
+<h1>Cool_Craft Lobby</h1>
+
+<div id="lobbyMenu">
+  <button id="startGameBtn">Spiel starten</button>
+  <button id="settingsBtn">Einstellungen</button>
+  <button id="modsBtn">Mods</button>
+  <div id="message"></div>
+</div>
+
+<div id="gameArea" style="display:none;">
+  <h2>Cool_Craft Test</h2>
+  <div id="gameGrid"></div>
+  <button id="backBtn">Zurück zur Lobby</button>
+</div>
+
+<script>
+  const startGameBtn = document.getElementById('startGameBtn');
+  const settingsBtn = document.getElementById('settingsBtn');
+  const modsBtn = document.getElementById('modsBtn');
+  const message = document.getElementById('message');
+  const lobbyMenu = document.getElementById('lobbyMenu');
+  const gameArea = document.getElementById('gameArea');
+  const backBtn = document.getElementById('backBtn');
+  const gameGrid = document.getElementById('gameGrid');
+
+  // 25 Blöcke
+  let blocks = new Array(25).fill(false);
+
+  function renderGrid() {
+    gameGrid.innerHTML = '';
+    blocks.forEach((active, index) => {
+      const block = document.createElement('div');
+      block.className = 'block' + (active ? ' active' : '');
+      block.addEventListener('click', () => {
+        blocks[index] = !blocks[index];
+        renderGrid();
+      });
+      gameGrid.appendChild(block);
+    });
+  }
+
+  startGameBtn.addEventListener('click', () => {
+    message.textContent = 'Starte das Spiel...';
+    lobbyMenu.style.display = 'none';
+    gameArea.style.display = 'block';
+    renderGrid();
+  });
+
+  settingsBtn.addEventListener('click', () => {
+    message.textContent = 'Einstellungen sind noch nicht verfügbar.';
+  });
+
+  modsBtn.addEventListener('click', () => {
+    message.textContent = 'Mods werden bald unterstützt.';
+  });
+
+  backBtn.addEventListener('click', () => {
+    gameArea.style.display = 'none';
+    lobbyMenu.style.display = 'block';
+    message.textContent = '';
+  });
+</script>
+
+</body>
+</html>
